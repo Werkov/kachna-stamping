@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage[a4paper,hmargin=0mm,vmargin=7mm,portrait]{geometry}
+\usepackage{tabularx}
+\usepackage{array}
+
+\setlength{\parindent}{0pt}
+\newlength{\tabh}
+\setlength{\tabh}{28.8mm}
+
+\pagestyle{empty}
+
+\begin{document}
+~\vspace{24mm}
+\begin{center}
+	\begin{tabularx}{159mm}{r>{\setlength\hsize{1\hsize}\centering}X>{\setlength\hsize{1\hsize}\centering}Xl}
+		& \input{inner} & \input{inner} &  \\[\tabh]
+		& \input{inner} & \input{inner} &  \\[\tabh]
+		& \input{inner} & \input{inner} &  \\[\tabh]
+		& \input{inner} & \input{inner} &  \\[\tabh]
+		& \input{inner} & \input{inner} &  \\[\tabh]
+\end{tabularx}
+\end{center}
+
+\end{document}

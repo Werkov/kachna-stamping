@@ -8,10 +8,14 @@ FILE=$1
 num=$2
 name=$3
 
+if [ "x$4" =="x" ] ; then
+	format=`utils/get-format.sh $FILE`
+else
+	format=$4
+fi
+
 # create stamp
 sed  "s/@num@/$num/g;s/@name@/$name/g" <$STAMPDIR/$INNER_TPL >$STAMPDIR/$INNER
-format=`utils/get-format.sh $FILE`
-
 cd $STAMPDIR
 xelatex ${format}.tex
 cd -
