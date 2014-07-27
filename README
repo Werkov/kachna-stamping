@@ -1,0 +1,19 @@
+Add headers to PDF files.
+
+Input
+=====
+- CSV with header contents and input PDF files.
+- Layouts for stamps (A4, A5, A6 and some custom layouts).
+
+Output
+======
+- Stamped PDF files.
+- A4 PDF with smaller PDF repeated appropriatly for printing.
+
+TODO
+====
+- create Makefile such that single stamped PDF can be created on demand
+	- batch processing is impractical
+- emphasize supported paper sizes
+- or be prepared for various template layouts
+	- e.g. fractions of A4 paper
