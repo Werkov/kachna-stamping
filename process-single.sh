@@ -1,4 +1,5 @@
 #!/bin/bash
+#set -x
 
 STAMPDIR=stamps
 INNER_TPL=inner-template.tex
@@ -8,7 +9,7 @@ FILE=$1
 num=$2
 name=$3
 
-if [ "x$4" =="x" ] ; then
+if [ "x$4" == "x" ] ; then
 	format=`utils/get-format.sh $FILE`
 else
 	format=$4

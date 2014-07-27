@@ -40,5 +40,6 @@ done
 REP=${FILE%.pdf}-rep.pdf
 pdftk $arg cat output $REP
 
+r="--landscape"
 
 pdfjam --suffix nup --nup "${w}x${h}" $r -- $REP
