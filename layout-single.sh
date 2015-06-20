@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ "x$1" = "x" ] ; then
+	echo "Usage: $0 filename.pdf"
+	echo
+	echo "       Creates two files"
+	echo "         - filename-rep.pdf contains repeated input file to fill A4"
+	echo "         - filename-rep-nup.pdf contains repeated and laid out input file on A4"
+	echo
+fi
 
 FILE=$1
 

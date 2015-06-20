@@ -9,7 +9,17 @@ FILE=$1
 num=$2
 name=$3
 
-if [ "x$4" == "x" ] ; then
+if [ "x$1" == "x" ] ; then
+	echo "Usage: $0 filename.pdf num name [format]"
+	echo
+	echo "       Apply a stamp to 'filename', 'num' and 'name' are used"
+	echo "       inside a stamp template. When format is not specified best"
+	echo "       guess from dimensions is used."
+	echo "       Output is written to filename-stamped.pdf"
+	echo
+
+	exit 0
+elif [ "x$4" == "x" ] ; then
 	format=`utils/get-format.sh $FILE`
 else
 	format=$4
