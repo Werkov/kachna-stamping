@@ -1,15 +1,17 @@
 #!/bin/bash
 
 if [ "x$1" = "x" ] ; then
-	echo "Usage: $0 filename.pdf"
+	echo "Usage: $0 filename.pdf output-file"
 	echo
 	echo "       Creates two files"
-	echo "         - filename-rep.pdf contains repeated input file to fill A4"
-	echo "         - filename-rep-nup.pdf contains repeated and laid out input file on A4"
+	echo "         - output-file contains repeated input file to fill A4"
+	echo "         - output-file + nup.pdf contains repeated and laid out input file on A4"
 	echo
+	exit
 fi
 
 FILE=$1
+OUTPUT=$2
 
 format=`utils/get-format.sh $FILE`
 
@@ -45,9 +47,8 @@ for i in `seq $repeats` ; do
 	arg="$arg $FILE"
 done
 
-REP=${FILE%.pdf}-rep.pdf
-pdftk $arg cat output $REP
+pdftk $arg cat output "$OUTPUT"
 
 r="--landscape"
 
-pdfjam --suffix nup --nup "${w}x${h}" $r -- $REP
+pdfjam --suffix nup --outfile `dirname "$OUTPUT"` --nup "${w}x${h}" $r -- "$OUTPUT"

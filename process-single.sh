@@ -6,23 +6,24 @@ INNER_TPL=inner-template.tex
 INNER=inner.tex
 
 FILE=$1
-num=$2
-name=$3
+OUTPUT=$2
+num=$3
+name=$4
 
 if [ "x$1" == "x" ] ; then
-	echo "Usage: $0 filename.pdf num name [format]"
+	echo "Usage: $0 filename.pdf output-name num name [format]"
 	echo
 	echo "       Apply a stamp to 'filename', 'num' and 'name' are used"
 	echo "       inside a stamp template. When format is not specified best"
 	echo "       guess from dimensions is used."
-	echo "       Output is written to filename-stamped.pdf"
+	echo "       Output is written to output-name file."
 	echo
 
 	exit 0
-elif [ "x$4" == "x" ] ; then
+elif [ "x$5" == "x" ] ; then
 	format=`utils/get-format.sh $FILE`
 else
-	format=$4
+	format=$5
 fi
 
 # create stamp
@@ -32,7 +33,7 @@ xelatex ${format}.tex
 cd -
 	
 # apply stamp
-pdftk "$FILE" stamp $STAMPDIR/${format}.pdf output "${FILE%.pdf}-stamped.pdf"
+pdftk "$FILE" stamp $STAMPDIR/${format}.pdf output "$OUTPUT"
 
 echo "Stamped $FILE $*"
 
