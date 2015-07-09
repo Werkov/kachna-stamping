@@ -30,6 +30,7 @@ Requirements
 - xelatex
 - pdftk
 - pdfjam
+- pdfinfo (e.g. part of Poppler or xpdf)
  
 Demo
 ====
