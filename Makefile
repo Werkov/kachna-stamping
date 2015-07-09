@@ -24,7 +24,7 @@ ID_NAME      = $(basename $(notdir $(wildcard $(INPUT_DIR)/$(ID)-*.pdf)))
 INPUT_FILES  = $(wildcard $(INPUT_DIR)/*.pdf)
 INPUT_NAMES  = $(basename $(notdir $(INPUT_FILES)))
 OUTPUT_FILES = $(addsuffix -rep.pdf,$(addprefix $(OUTPUT_DIR)/,$(INPUT_NAMES)))
-STAMP_DEPS   = $(wildcard $(STAMPS_DIR)/*.tex)
+STAMP_DEPS   = $(filter-out %inner.tex,$(wildcard $(STAMPS_DIR)/*.tex))
 
 #
 # General rules
