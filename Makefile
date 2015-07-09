@@ -20,21 +20,35 @@ PROCESS = $(PWD)/process-single.sh
 #
 # Compose useful variables
 #
-BASENAME = $(basename $(notdir $(wildcard $(INPUT_DIR)/$(ID)-*.pdf)))
-
-STAMP_DEPS = $(wildcard $(STAMPS_DIR)/*.tex)
+ID_NAME      = $(basename $(notdir $(wildcard $(INPUT_DIR)/$(ID)-*.pdf)))
+INPUT_FILES  = $(wildcard $(INPUT_DIR)/*.pdf)
+INPUT_NAMES  = $(basename $(notdir $(INPUT_FILES)))
+OUTPUT_FILES = $(addsuffix -rep.pdf,$(addprefix $(OUTPUT_DIR)/,$(INPUT_NAMES)))
+STAMP_DEPS   = $(wildcard $(STAMPS_DIR)/*.tex)
 
 #
 # General rules
 #
-.PHONY: single clean
-.SECONDARY: $(WORK_DIR)/$(BASENAME)-stamped.pdf
+.PHONY: all clean cleansingle cleanall
 
-single: $(OUTPUT_DIR)/$(BASENAME)-rep.pdf
-clean:
-	rm -f $(OUTPUT_DIR)/$(BASENAME)-rep.pdf
-	rm -f $(OUTPUT_DIR)/$(BASENAME)-rep-nup.pdf
-	rm -f $(WORK_DIR)/$(BASENAME)-stamped.pdf
+ifeq ($(ID),)
+all: $(OUTPUT_FILES)
+clean: cleanall
+.SECONDARY: $(addsuffix -stamped.pdf,$(addprefix $(WORK_DIR)/,$(INPUT_NAMES)))
+else
+all: $(OUTPUT_DIR)/$(ID_NAME)-rep.pdf
+clean: cleansingle
+.SECONDARY: $(WORK_DIR)/$(ID_NAME)-stamped.pdf
+endif
+
+cleansingle:
+	rm -f $(OUTPUT_DIR)/$(ID_NAME)-rep.pdf
+	rm -f $(OUTPUT_DIR)/$(ID_NAME)-rep-nup.pdf
+	rm -f $(WORK_DIR)/$(ID_NAME)-stamped.pdf
+
+cleanall:
+	rm -f $(OUTPUT_DIR)/*
+	rm -f $(WORK_DIR)/*
 
 
 #
@@ -42,13 +56,14 @@ clean:
 #
 
 # The recipe uses while loop just because of how 'read' obtains its input.
-$(WORK_DIR)/$(BASENAME)-stamped.pdf: $(INPUT_DIR)/$(BASENAME).pdf \
+$(WORK_DIR)/%-stamped.pdf: $(INPUT_DIR)/%.pdf \
     $(DATA_FILE) $(STAMP_DEPS)
-	grep "^$(ID);" $(DATA_FILE) | while IFS=";" read id num name format ; do \
+	ID=`echo "$*" | sed s/-.*$$//` ; \
+	grep "^$$ID;" $(DATA_FILE) | while IFS=";" read id num name format ; do \
 	$(PROCESS) "$<" "$@" $$num $$name $$format ; \
 	done
 
-$(OUTPUT_DIR)/$(BASENAME)-rep.pdf $(OUTPUT_DIR)/$(BASENAME)-rep-nup.pdf: \
-    $(WORK_DIR)/$(BASENAME)-stamped.pdf
+$(OUTPUT_DIR)/%-rep.pdf $(OUTPUT_DIR)/%-rep-nup.pdf: \
+    $(WORK_DIR)/%-stamped.pdf
 	$(LAYOUT) "$<" "$@"
 
