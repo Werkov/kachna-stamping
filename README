@@ -2,18 +2,36 @@ Add headers to PDF files.
 
 Input
 =====
-- CSV with header contents and input PDF files.
-- Layouts for stamps (A4, A5, A6 and some custom layouts).
+- CSV with header contents
+  - called 'sifry.csv' with columns: id, number, name, format
+  - columns are delimited by ';'
+  - format is optional and it should match existing template in stamps directory
+- input PDF files
+  - put them into 'input' directory
+  - they name must be in the form '<ID>-<some random string>.pdf'
+- layouts for stamps (A4, A5, A6 and some custom layouts).
 
 Output
 ======
-- Stamped PDF files.
-- A4 PDF with smaller PDF repeated appropriatly for printing.
+- Stamped PDF files. (in 'work' directory)
+- A4 PDF with smaller PDF repeated appropriately for printing (in 'output' directory)
 
-TODO
+Usage
+=====
+- Use generic Makefile
+  - either 'make' to build everything
+  - or 'make ID=<ID>' to stamp only particular file (with matching ID)
+  - you can also use 'make clean' to clean aby created files
+
+Requirements
+============
+- bash, sed
+- GNU Make
+- xelatex
+- pdftk
+- pdfjam
+ 
+Demo
 ====
-- create Makefile such that single stamped PDF can be created on demand
-	- batch processing is impractical
-- emphasize supported paper sizes
-- or be prepared for various template layouts
-	- e.g. fractions of A4 paper
+- run 'prepare-sample.sh' to put input data to their locations
+- run 'make', it should stamp PDF files from your input directory

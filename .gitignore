@@ -2,3 +2,4 @@ stamps/*.pdf
 stamps/*.log
 stamps/*.aux
 stamps/inner.tex
+/sifry.csv
