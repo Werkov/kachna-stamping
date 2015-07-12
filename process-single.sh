@@ -26,6 +26,10 @@ else
 	format=$5
 fi
 
+if [ ! -f "$STAMPDIR/${format}.tex" ] ; then
+	format=unknown
+fi
+
 # create stamp
 sed  "s/@num@/$num/g;s/@name@/$name/g" <$STAMPDIR/$INNER_TPL >$STAMPDIR/$INNER
 cd $STAMPDIR

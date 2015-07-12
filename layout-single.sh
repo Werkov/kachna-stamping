@@ -19,6 +19,12 @@ num=`echo $format | sed 's/[^0-9]//g'`
 rot=${format/a?-}
 
 num=$(($num-4))
+if [ $num -lt 0 ] ; then
+	echo "Unsupported format ${format}, not layouting."
+	cp "$FILE" "$OUTPUT"
+	exit
+fi
+
 repeats=`echo "2^($num)" | bc`
 w=`echo "sqrt($repeats*2)" | bc`
 h=`echo "sqrt($repeats)" | bc`
@@ -47,8 +53,5 @@ for i in `seq $repeats` ; do
 	arg="$arg $FILE"
 done
 
-pdftk $arg cat output "$OUTPUT"
-
-r="--landscape"
-
-pdfjam --suffix nup --outfile `dirname "$OUTPUT"` --nup "${w}x${h}" $r -- "$OUTPUT"
+pdftk $arg cat output "$OUTPUT" && \
+    pdfjam --suffix nup --outfile `dirname "$OUTPUT"` --nup "${w}x${h}" $r -- "$OUTPUT"
