@@ -3,12 +3,12 @@ Add headers to PDF files.
 Input
 =====
 - CSV with header contents
-  - called 'sifry.csv' with columns: id, number, name, format
-  - columns are delimited by ';'
+  - called 'sifry.csv' with columns: id, src, dir, dst, format and others (aka Kachní mastertabulka)
+  - columns are delimited by ','
   - format is optional and it should match existing template in stamps directory
 - input PDF files
   - put them into 'input' directory
-  - they name must be in the form '<ID>-<some random string>.pdf'
+  - they name must be in the form '<ID>-<some string>.pdf'
 - layouts for stamps (A4, A5, A6 and some custom layouts).
 
 Output
@@ -21,7 +21,7 @@ Usage
 - Use generic Makefile
   - either 'make' to build everything
   - or 'make ID=<ID>' to stamp only particular file (with matching ID)
-  - you can also use 'make clean' to clean aby created files
+  - you can also use 'make clean' to clean all created files
 
 Requirements
 ============

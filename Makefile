@@ -7,9 +7,10 @@ OUTPUT_DIR = $(PWD)/output
 STAMPS_DIR = $(PWD)/stamps
 
 #
-# Data file (format id;num;name;[format])
+# Data file (format id;src;dir;dst;fmt;...)
 #
 DATA_FILE  = $(PWD)/sifry.csv
+DATA_SEP   = ,
 
 #
 # Tools
@@ -59,8 +60,8 @@ cleanall:
 $(WORK_DIR)/%-stamped.pdf: $(INPUT_DIR)/%.pdf \
     $(DATA_FILE) $(STAMP_DEPS)
 	ID=`echo "$*" | sed s/-.*$$//` ; \
-	grep "^$$ID;" $(DATA_FILE) | while IFS=";" read id num name format ; do \
-	$(PROCESS) "$<" "$@" $$num $$name $$format ; \
+	grep "^$$ID$(DATA_SEP)" $(DATA_FILE) | while IFS="$(DATA_SEP)" read id src dir dst fmt rest ; do \
+	$(PROCESS) "$<" "$@" $$src $$dir $$fmt ; \
 	done
 
 $(OUTPUT_DIR)/%-rep.pdf $(OUTPUT_DIR)/%-rep-nup.pdf: \
