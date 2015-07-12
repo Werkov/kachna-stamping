@@ -36,3 +36,7 @@ Demo
 ====
 - run 'prepare-sample.sh' to put input data to their locations
 - run 'make', it should stamp PDF files from your input directory
+
+TODO
+====
+- parallel build doesn't work because of shared file 'input.tex'
