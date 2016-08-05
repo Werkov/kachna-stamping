@@ -10,6 +10,15 @@ OUTPUT=$2
 num=$3
 name=$4
 
+# apply preprocessing
+PROCESSED=`mktemp`
+PREC=${FILE%*.pdf}.sh
+if [ -x "$PREC" ] ; then
+	$PREC "$FILE" "$PROCESSED"
+else
+	cp "$FILE" "$PROCESSED"
+fi
+
 if [ "x$1" == "x" ] ; then
 	echo "Usage: $0 filename.pdf output-name num name [format]"
 	echo
@@ -21,7 +30,7 @@ if [ "x$1" == "x" ] ; then
 
 	exit 0
 elif [ "x$5" == "x" ] ; then
-	format=`utils/get-format.sh $FILE`
+	format=`utils/get-format.sh $PROCESSED`
 else
 	format=$5
 fi
@@ -37,7 +46,9 @@ xelatex ${format}.tex
 cd -
 	
 # apply stamp
-pdftk "$FILE" stamp $STAMPDIR/${format}.pdf output "$OUTPUT"
+pdftk "$PROCESSED" stamp $STAMPDIR/${format}.pdf output "$OUTPUT"
+
+rm "$PROCESSED"
 
 echo "Stamped $FILE $*"
 

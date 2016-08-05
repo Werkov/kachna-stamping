@@ -24,6 +24,7 @@ if [ $num -lt 0 ] ; then
 	cp "$FILE" "$OUTPUT"
 	exit
 fi
+echo "Layouting for format ${format}."
 
 repeats=`echo "2^($num)" | bc`
 w=`echo "sqrt($repeats*2)" | bc`
