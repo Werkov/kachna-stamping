@@ -6,7 +6,7 @@ INPUT_DIR=final
 DATA=$1
 PROC=./process-single.sh
 
-export IFS=";"
+export IFS=","
 cat $DATA | while read id num variant format ; do
 	FILE=`echo $INPUT_DIR/$id-*.pdf`
 	CHECK="$INPUT_DIR/$id-*.pdf"
