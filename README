@@ -37,6 +37,18 @@ Demo
 - run 'prepare-sample.sh' to put input data to their locations
 - run 'make', it should stamp PDF files from your input directory
 
+Docker
+======
+For a convenient usage, Dockerfile with all the requirements is included. It expects local sifry.csv, input and output directories to be mounted.
+Run `docker build -t kachna-stamping .` to build the image locally, then use it via:
+```
+docker run -it \
+-v "/path/to/input:/stamping/input" \
+-v "/path/to/output:/stamping/output" \
+-v "/path/to/sifry.csv:/stamping/sifry.csv" \
+kachna-stamping
+```
+
 TODO
 ====
 - parallel build doesn't work because of shared file 'input.tex'
